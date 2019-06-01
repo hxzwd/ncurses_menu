@@ -26,6 +26,12 @@ int32_t default_option_key_handler(int32_t key_code, struct st_terminal_menu * m
 int32_t custom_key_handler(int32_t key_code, struct st_terminal_menu * menu);
 void custom_void_handler(void);
 int32_t custom_non_void_handler(char * message);
+int32_t custom_non_void_handler_1(char * message);
+int32_t custom_non_void_handler_2(char * message);
+int32_t custom_non_void_handler_3(char * message);
+int32_t custom_non_void_handler_4(char * message);
+int32_t custom_non_void_handler_5(char * message);
+int32_t custom_non_void_handler_6(char * message);
 
 #endif
 

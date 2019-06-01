@@ -20,6 +20,7 @@
 #define CP_RED_ON_BLACK		1
 #define CP_GREEN_ON_BLACK	2
 #define CP_BLUE_ON_BLACK	3
+#define CP_BLACK_ON_GREEN	20
 
 struct st_key_code
 {
@@ -189,6 +190,14 @@ int32_t wait_for_key_desc(char * key_desc);
 int32_t wait_for_key_desc_d(char * key_desc);
 void fill_ascii_key_codes_list(void);
 int32_t check_ascii_printable(char * key_desc, struct st_key_code * key_data);
+
+void draw_corner_window(int32_t x1, int32_t y1);
+void erase_corner_window(int32_t x1, int32_t y1);
+void clear_corner_window(int32_t x1, int32_t y1);
+void print_in_corner_window(int32_t x1, int32_t y1, int32_t row, int32_t col, char * message);
+
+void clear_status_line(void);
+void print_in_status_line(int32_t x_pos, char * message);
 
 #endif
 

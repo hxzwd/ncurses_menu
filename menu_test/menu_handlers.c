@@ -267,8 +267,83 @@ void custom_void_handler(void)
 
 int32_t custom_non_void_handler(char * message)
 {
-	clear_screen();
 
+	clear_screen();
+	
 	return -1;
 }
+
+
+int32_t custom_non_void_handler_1(char * message)
+{
+
+	int32_t max_rows;
+	int32_t max_cols;
+
+	get_screen_size(&max_rows, &max_cols);
+
+	clear_screen();
+
+	draw_corner_window(max_cols - 45, 15);
+	
+	return -1;
+}
+
+int32_t custom_non_void_handler_2(char * message)
+{
+
+	int32_t max_rows;
+	int32_t max_cols;
+
+	get_screen_size(&max_rows, &max_cols);
+
+	erase_corner_window(max_cols - 45, 15);
+	
+	return -1;
+}
+
+int32_t custom_non_void_handler_3(char * message)
+{
+
+	int32_t max_rows;
+	int32_t max_cols;
+
+	get_screen_size(&max_rows, &max_cols);
+
+	clear_corner_window(max_cols - 45, 15);
+	
+	return -1;
+}
+
+int32_t custom_non_void_handler_4(char * message)
+{
+
+	int32_t max_rows;
+	int32_t max_cols;
+
+	get_screen_size(&max_rows, &max_cols);
+
+	print_in_corner_window(max_cols - 45, 15, 1, 2, message);
+	
+	return -1;
+}
+
+int32_t custom_non_void_handler_5(char * message)
+{
+
+	clear_status_line();
+	
+	return -1;
+}
+
+int32_t custom_non_void_handler_6(char * message)
+{
+
+	on_colors(CP_BLACK_ON_GREEN);
+	print_in_status_line(5, message);
+	off_colors(CP_BLACK_ON_GREEN);
+	
+	return -1;
+}
+
 

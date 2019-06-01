@@ -634,6 +634,7 @@ void func_start(void)
 	set_color_pair(CP_RED_ON_BLACK, COLOR_RED, COLOR_BLACK);
 	set_color_pair(CP_GREEN_ON_BLACK, COLOR_GREEN, COLOR_BLACK);
 	set_color_pair(CP_BLUE_ON_BLACK, COLOR_BLUE, COLOR_BLACK);
+	set_color_pair(CP_BLACK_ON_GREEN, COLOR_BLACK, COLOR_GREEN);
 }
 
 void func_finish(void)
@@ -988,6 +989,113 @@ void menu_set_rectangle_options(int32_t x1, int32_t y1, int32_t x2, int32_t y2, 
 	menu->rectangle_points[3] = y2;
 }
 
+
+void draw_corner_window(int32_t x1, int32_t y1)
+{
+	int32_t max_rows;
+	int32_t max_cols;
+
+	
+	int32_t points[4] = { 0 };
+	
+	get_screen_size(&max_rows, &max_cols);
+	
+	points[0] = x1;
+	points[1] = y1;
+	points[2] = max_cols - 1;
+	points[3] = max_rows - 1;
+
+	draw_rectangle(points);
+
+}
+
+void erase_corner_window(int32_t x1, int32_t y1)
+{
+	int32_t max_rows;
+	int32_t max_cols;
+
+	
+	int32_t points[4] = { 0 };
+	
+	get_screen_size(&max_rows, &max_cols);
+	
+	points[0] = x1;
+	points[1] = y1;
+	points[2] = max_cols;
+	points[3] = max_rows;
+
+	for(uint32_t i = y1; i <= max_rows; i++)
+	{
+		clear_line_at(i, x1);
+	}
+
+}
+
+void clear_corner_window(int32_t x1, int32_t y1)
+{
+	erase_corner_window(x1, y1);
+	draw_corner_window(x1, y1);
+
+}
+
+void print_in_corner_window(int32_t x1, int32_t y1, int32_t row, int32_t col, char * message)
+{
+	int32_t current_x_pos;
+	int32_t current_y_pos;
+	int32_t print_x_pos;
+	int32_t print_y_pos;
+	int32_t message_len;
+	int32_t max_rows;
+	int32_t max_cols;
+	int32_t window_width;
+	int32_t window_height;
+
+	get_screen_size(&max_rows, &max_cols);
+
+	current_x_pos = get_current_x_pos();
+	current_y_pos = get_current_y_pos();
+
+	print_x_pos = x1 + col + 1;
+	print_y_pos = y1 + row + 1;
+
+	message_len = strlen(message);
+	window_width = max_cols - x1;
+	window_height = max_rows - y1;
+
+	if(message_len > window_width)
+	{
+		char tmp_buffer[1024] = { 0 };
+		memcpy(tmp_buffer, message, window_width - col - 1);
+		print_at_point(print_y_pos, print_x_pos, tmp_buffer);
+		print_in_corner_window(x1, y1, row + 1, col, &(message[window_width - col - 1]));
+	}
+	else
+	{
+		print_at_point(print_y_pos, print_x_pos, message);
+	}
+
+	//move_at_position(current_x_pos, current_y_pos);
+}
+
+void clear_status_line(void)
+{
+	int32_t max_rows;
+	int32_t max_cols;
+
+	get_screen_size(&max_rows, &max_cols);
+
+	clear_line(max_rows - 1);
+}
+
+void print_in_status_line(int32_t x_pos, char * message)
+{
+	int32_t max_rows;
+	int32_t max_cols;
+
+	get_screen_size(&max_rows, &max_cols);
+
+	print_at_point(max_rows - 1, x_pos, message);
+}
 
 int32_t main_old_4(int32_t argc, char **argv)
 {
